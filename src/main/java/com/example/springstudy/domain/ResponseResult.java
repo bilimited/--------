@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 /**
  * 封装的结果类，包括结果代码，消息，是否操作成功，数据体等。
+ *
  * 返回的json格式:
  * {
  *     header:{blabla...}
@@ -20,7 +21,7 @@ import java.io.Serializable;
  *         }
  *     }
  * }
- * @param <T>
+ * @param <T> 响应结果里data的类型
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseResult<T> implements Serializable {

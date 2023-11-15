@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 /**
+ * 本类没有任何用，仅供测试。
+ *
  *  RestController:直接把数据以文本返回前端，后端不会涉及View的内容
  *  默认把数据转为json格式
  */

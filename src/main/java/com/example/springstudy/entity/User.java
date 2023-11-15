@@ -11,6 +11,10 @@ import lombok.experimental.Accessors;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+/**
+ * 用户类，包含用户的各种信息。
+ * 与数据库中的user表相对应。
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

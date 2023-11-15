@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+/**
+ * 登录拦截器。用户登陆后，每发起一个请求都会经过这个拦截器
+ */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -25,6 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     /**
      * 请求处理前被调用。也就是调用Controller前
+     * 如果请求带有Token，检查Token是否正确，如果不正确则向前端返回错误NEED_LOGIN
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

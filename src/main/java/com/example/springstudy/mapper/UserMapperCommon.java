@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
+ * 本类没有任何用，仅供测试。
+ * 正常的Mapper
  * Mapper:用于连接数据库与代码
  */
 @Mapper

@@ -7,6 +7,9 @@ import com.example.springstudy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 用户相关的Controller。负责所有/user开头的接口
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {

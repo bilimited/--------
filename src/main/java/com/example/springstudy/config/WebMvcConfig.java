@@ -9,6 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 配置拦截器
+ * WebMvcConfigurer配置类其实是Spring内部的一种配置方式，采用JavaBean的形式来代替传统的xml配置文件形式进行针对框架个性化定制，
+ * 可以自定义一些Handler，Interceptor，ViewResolver，MessageConverter。(摘自CSDN)
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -22,6 +24,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        /**
+         * 配置跨域请求
+         */
         registry.addMapping("/**")
                 .allowedMethods("*")
                 .allowCredentials(true) //允许发送Cookie
@@ -33,9 +38,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         /**
-         * 使用拦截器，会对/web及/admin的所有接口做登录验证
+         * 使用拦截器
          */
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/hello/**");
+                .addPathPatterns("/hello/**");//参数是需要做登录验证的接口，这里代表验证所有/Hello/开头的接口。
     }
 }

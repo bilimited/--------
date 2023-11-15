@@ -7,6 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 该类没有任何用，仅供测试 可以删了
+ */
 @RestController
 public class FileController {
     private static final String UPLOADED_FOLDER = System.getProperty("user.dir")+"/upload/";

@@ -3,6 +3,8 @@ package com.example.springstudy.controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 本类没有任何用，仅供测试。
+ *
  * RESTful API 设计风格
  * url中不出现动词(GET /user/id/,POST /user/ 代替/getuser?xxx/,/adduser/ ......)
  * (省略具体实现)

@@ -1,5 +1,9 @@
 package com.example.springstudy.domain.enums;
 
+/**
+ * 存放所有响应状态码的枚举类。
+ * 使用方法见ResponseResult
+ */
 public enum AppHttpCodeEnum {
     // 成功
     SUCCESS(200, "操作成功"),

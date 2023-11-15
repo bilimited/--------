@@ -10,7 +10,7 @@ import java.util.UUID;
 
 
 /**
- * 接受用户注册信息
+ * 用户注册时前端发给后端的数据.标注@JsonIgnore的字段为在后端生成，前端不需要赋值
  */
 @Data
 @AllArgsConstructor
@@ -19,6 +19,10 @@ public class RegistryUserDto {
     private long uid;
     private String username;
     private String password;
+
+    /**
+     * 盐值：一个随机的字符串，用于登录验证
+     */
     @JsonIgnore
     private String salt = UUID.randomUUID().toString().replaceAll("-","");
     private String phone;
