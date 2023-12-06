@@ -1,6 +1,8 @@
 package com.example.springstudy.config;
 
 import com.example.springstudy.handler.interceptor.LoginInterceptor;
+import com.example.springstudy.handler.interceptor.StudentInterceptor;
+import com.example.springstudy.handler.interceptor.TeacherInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -16,11 +18,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
-    public WebMvcConfig(LoginInterceptor loginInterceptor) {
+    public WebMvcConfig(LoginInterceptor loginInterceptor,StudentInterceptor studentInterceptor,TeacherInterceptor teacherInterceptor) {
         this.loginInterceptor = loginInterceptor;
+        this.studentInterceptor = studentInterceptor;
+        this.teacherInterceptor = teacherInterceptor;
     }
 
     private LoginInterceptor loginInterceptor;
+    private StudentInterceptor studentInterceptor;
+    private TeacherInterceptor teacherInterceptor;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -41,6 +47,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
          * 使用拦截器
          */
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/hello/**");//参数是需要做登录验证的接口，这里代表验证所有/Hello/开头的接口。
+                .addPathPatterns("/**");//参数是需要做登录验证的接口，这里代表验证所有/开头的接口。
+        registry.addInterceptor(studentInterceptor)
+                .addPathPatterns("/student/**");
+        registry.addInterceptor(teacherInterceptor)
+                .addPathPatterns("/teacher/**");
     }
 }

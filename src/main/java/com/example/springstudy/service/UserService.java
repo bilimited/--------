@@ -32,4 +32,6 @@ public interface UserService {
      */
     User checkToken(String token);
 
+    String checkRole(User user);
+
 }

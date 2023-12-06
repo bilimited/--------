@@ -1,5 +1,6 @@
 package com.example.springstudy.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,16 +23,34 @@ import java.util.UUID;
 @TableName("user")
 public class User {
 
-    @TableId
+    public User(long uid, String username, String password, String salt, String role) {
+        this.uid = uid;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.role = role;
+        create_time = new Timestamp(System.currentTimeMillis());
+        update_time = new Timestamp(System.currentTimeMillis());
+    }
+
+    @TableId(type = IdType.AUTO)
     private long uid;
     private String username;
     private String password;
     @JsonIgnore
     private String salt = UUID.randomUUID().toString().replaceAll("-","");
     private String phone;
+
+    private String realname;
+    private String sex;
+    private int age;
+    private String portraitid;
+
     private String role;
     private Timestamp create_time;
     private Timestamp update_time;
+
+
 
 
 }
