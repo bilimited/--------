@@ -10,20 +10,11 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)    //允许链式调用。User.setId().setUserName()......
-@TableName("course_view")
-public class CourseView {
+@TableName("student_course")
+public class Student_course {
 
-    private String cno;
-    private String cname;
-    private String dept;
-    private String tname;
-    private int day;
-    private int start;
-    private int end;
-    private String room;
-    private String note;
-    private int capacity;
-    private int stunumber;
-    private int progress;
+    String sno;
+    String cno;
+    int semester;
 
 }

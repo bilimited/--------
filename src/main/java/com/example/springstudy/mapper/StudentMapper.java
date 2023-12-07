@@ -15,4 +15,6 @@ public interface StudentMapper extends BaseMapper<Student> {
     @Select("Select * from student where sno=#{sno}")
     public List<Student> getStuByNo(String sno);
 
+
+
 }

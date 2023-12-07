@@ -1,5 +1,6 @@
 package com.example.springstudy.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,20 +11,20 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)    //允许链式调用。User.setId().setUserName()......
-@TableName("course_view")
-public class CourseView {
+@TableName("course")
+public class Course {
 
-    private String cno;
-    private String cname;
-    private String dept;
-    private String tname;
-    private int day;
-    private int start;
-    private int end;
-    private String room;
-    private String note;
-    private int capacity;
-    private int stunumber;
-    private int progress;
+    @TableId
+    String cno;
+    String cname;
+    String dept;
+    String tno;
+    int day;
+    int start;
+    int end;
+    String room;
+    String note;
+    int capacity;
+    int progress;
 
 }
