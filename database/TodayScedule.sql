@@ -1,4 +1,3 @@
--- --------------------------------------------------------
 -- 主机:                           127.0.0.1
 -- 服务器版本:                        8.0.34 - MySQL Community Server - GPL
 -- 服务器操作系统:                      Win64
@@ -81,9 +80,9 @@ CREATE TABLE IF NOT EXISTS `student_course` (
   `cno` varchar(20) NOT NULL,
   `semester` varchar(20) NOT NULL,
   PRIMARY KEY (`sno`,`cno`,`semester`),
-  KEY `cno` (`cno`),
-  CONSTRAINT `cno` FOREIGN KEY (`cno`) REFERENCES `course` (`cno`),
-  CONSTRAINT `sno` FOREIGN KEY (`sno`) REFERENCES `student` (`sno`)
+  KEY `fk_scc_cno` (`cno`),
+  CONSTRAINT `fk_scc_cno` FOREIGN KEY (`cno`) REFERENCES `course` (`cno`),
+  CONSTRAINT `fk_scc_sno` FOREIGN KEY (`sno`) REFERENCES `student` (`sno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='student to course';
 
 -- 数据导出被取消选择。
