@@ -41,10 +41,12 @@ public class User {
     private String salt = UUID.randomUUID().toString().replaceAll("-","");
     private String phone;
 
-    private String realname;
-    private String sex;
-    private int age;
-    private String portraitid;
+    // 用户真实姓名，暂时注释掉，
+//    private String realname;
+//    private String sex;
+//    private int age;
+    // 用户头像id
+//    private String portraitid;
 
     private String role;
     private Timestamp create_time;

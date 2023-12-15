@@ -36,8 +36,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("token");
-
+        String requestURL = String.valueOf(request.getRequestURL());
+        // 判断token是否为空
         if(StringUtils.isEmpty(token)){
+            System.out.println("error url is " + requestURL);
             throw new Exception(String.valueOf(AppHttpCodeEnum.NEED_LOGIN));
         }
         User user = userService.checkToken(token);

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.domain.enums.AppHttpCodeEnum;
+import com.example.springstudy.entity.Teacher;
 import com.example.springstudy.entity.User_role;
 import com.example.springstudy.entity.dto.LoginUserDto;
 import com.example.springstudy.entity.dto.LoginUserResponseDto;
@@ -31,9 +32,12 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserMapper userMapper;
     private StudentMapper studentMapper;
+    @Autowired
     private TeacherMapper teacherMapper;
+    @Autowired
     private UserRoleMapper roleMapper;
     private RedisCache redisCache;
 
@@ -58,10 +62,12 @@ public class UserServiceImpl implements UserService {
 
         registryUserDto.setPassword(md5Password);
 
-        //registryUserDto.setCreate_time(new Timestamp(System.currentTimeMillis()));
-        //registryUserDto.setUpdate_time(new Timestamp(System.currentTimeMillis()));
+        registryUserDto.setCreate_time(new Timestamp(System.currentTimeMillis()));
+        registryUserDto.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
+        // 判断用户名是否已经存在
         if(isUserExist(registryUserDto.getUsername())){
+            System.out.println("用户名已经存在");
             return ResponseResult.errorResult(AppHttpCodeEnum.USERNAME_EXIST);
         }
 
@@ -76,8 +82,8 @@ public class UserServiceImpl implements UserService {
         //User user = BeanCopyUtil.copyBean(registryUserDto,User.class);
 
 
-
-        //角色验证部分 依托答辩
+        System.out.println("$$$开始加入数据$$$");
+        //角色验证部分 根据填写的role的不同对用户做出区分
         if(user.getRole().equals("student")){
             if(isStudentRegistered(registryUserDto.getNo())){
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
@@ -88,20 +94,29 @@ public class UserServiceImpl implements UserService {
             }else {
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
             }
-        }else if(user.getRole().equals("teacher")){
+        }
+        else if(user.getRole().equals("teacher")){
             if(isTeacherRegistered(registryUserDto.getNo())){
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
             }
+            System.out.println("$$$判断没有注册成功$$$");
+
+//            System.out.println(isTeacherExist(registryUserDto.getNo()));
             if(isTeacherExist(registryUserDto.getNo())){
+                System.out.println("加入的老师为:" + user.getUsername());
                 userMapper.insert(user);
+                teacherMapper.insert(new Teacher(registryUserDto.getNo(), registryUserDto.getUsername()));
                 roleMapper.insert(new User_role(user.getUid(),null, registryUserDto.getNo()));
             }else {
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
             }
-        }else{
+        }
+        else{
             return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
         }
 
+
+        System.out.println("$$$运行成功$$$");
         return ResponseResult.okResult();
     }
 
@@ -169,7 +184,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean isStudentExist(String sno){
-        return !studentMapper.getStuByNo(sno).isEmpty();
+        return studentMapper.getStuByNo(sno).isEmpty();
     }
     public boolean isStudentRegistered(String sno){
         QueryWrapper<User_role> wrapper = new QueryWrapper<>();
@@ -178,7 +193,7 @@ public class UserServiceImpl implements UserService {
         return  !l.isEmpty();
     }
     public boolean isTeacherExist(String tno){
-        return !teacherMapper.getTeacherByNo(tno).isEmpty();
+        return teacherMapper.getTeacherByNo(tno).isEmpty();
     }
     public boolean isTeacherRegistered(String tno){
         QueryWrapper<User_role> wrapper = new QueryWrapper<>();
@@ -190,7 +205,9 @@ public class UserServiceImpl implements UserService {
     public boolean isUserExist(String username){
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("username",username);
+        System.out.println("star jud if exist name");
         List<User> l = userMapper.selectList(wrapper);
-        return  !l.isEmpty();
+        return !l.isEmpty();
+//        return false;
     }
 }

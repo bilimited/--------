@@ -5,10 +5,12 @@ import com.example.springstudy.entity.dto.LoginUserDto;
 import com.example.springstudy.entity.dto.LoginUserResponseDto;
 import com.example.springstudy.entity.dto.RegistryUserDto;
 import com.example.springstudy.entity.User;
+import org.springframework.stereotype.Component;
 
 /**
  * 用户服务接口。接口的实现位于./impl/UserServiceImpl
  */
+
 public interface UserService {
 
     /**
