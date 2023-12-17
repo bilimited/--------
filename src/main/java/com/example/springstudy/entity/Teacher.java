@@ -15,14 +15,6 @@ import lombok.experimental.Accessors;
 public class Teacher {
     @TableId
     private String tno;
-    private String tname;
-    private String college;
-    private String major;
-    private String sex;
 
-    public Teacher(String tno,String tname){
-        this.tno = tno;
-        this.tname = tname;
-    }
 
 }
