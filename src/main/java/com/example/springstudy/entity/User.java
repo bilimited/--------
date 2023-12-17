@@ -37,10 +37,6 @@ public class User {
     private long uid;
     private String username;
     private String password;
-    /*
-        当User对象被序列化为JSON字符串时，salt属性将不会被包含在生成的JSON中，
-        也不会从JSON字符串中解析为User对象的属性。这样可以在序列化和反序列化过程中保护敏感信息的安全性。
-     */
     @JsonIgnore
     private String salt = UUID.randomUUID().toString().replaceAll("-","");
     private String phone;

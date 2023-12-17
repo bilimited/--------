@@ -15,5 +15,4 @@ import lombok.experimental.Accessors;
 public class Student {
     @TableId
     private String sno;
-
 }

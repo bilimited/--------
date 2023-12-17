@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.domain.enums.AppHttpCodeEnum;
-import com.example.springstudy.entity.Student;
 import com.example.springstudy.entity.Teacher;
 import com.example.springstudy.entity.User_role;
 import com.example.springstudy.entity.dto.LoginUserDto;
@@ -86,29 +85,27 @@ public class UserServiceImpl implements UserService {
         System.out.println("$$$开始加入数据$$$");
         //角色验证部分 根据填写的role的不同对用户做出区分
         if(user.getRole().equals("student")){
-            // 学生部分
             if(isStudentRegistered(registryUserDto.getNo())){
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
             }
             if(isStudentExist(registryUserDto.getNo())){
                 userMapper.insert(user);
-                studentMapper.insert(new Student(registryUserDto.getNo()));
                 roleMapper.insert(new User_role(user.getUid(),registryUserDto.getNo(),null));
             }else {
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
             }
         }
         else if(user.getRole().equals("teacher")){
-            // 老师部分
             if(isTeacherRegistered(registryUserDto.getNo())){
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
             }
-//            System.out.println("$$$判断没有注册成功$$$");
-            // 开始往数据库里面添加数据
+            System.out.println("$$$判断没有注册成功$$$");
+
+//            System.out.println(isTeacherExist(registryUserDto.getNo()));
             if(isTeacherExist(registryUserDto.getNo())){
-//                System.out.println("加入的老师为:" + user.getUsername());
+                System.out.println("加入的老师为:" + user.getUsername());
                 userMapper.insert(user);
-                teacherMapper.insert(new Teacher(registryUserDto.getNo()));
+                teacherMapper.insert(new Teacher(registryUserDto.getNo(), registryUserDto.getUsername()));
                 roleMapper.insert(new User_role(user.getUid(),null, registryUserDto.getNo()));
             }else {
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
@@ -127,36 +124,28 @@ public class UserServiceImpl implements UserService {
     public ResponseResult<LoginUserResponseDto> login(LoginUserDto loginUserDto) {
         String usrName = loginUserDto.getUsername();
         String psw = loginUserDto.getPassword();
-        // User::getUsername指定了要查询的字段（从数据库中查找的字段），usrName是要查询的用户名。
+
+        //选择一个用户名相同的User
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>();
         queryWrapper.eq(User::getUsername,usrName);
-        // 从数据库中查找到该用户的信息，此时user内存储该用户存储在数据库中的信息
         User user = userMapper.selectOne(queryWrapper);
-        if(user == null) {
-            // 用户不存在
+        if(null == user) {
             return ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
         }
-        // 如果这个用户的uid存在，根据uid返回这个用户的role
         String role = checkRole(user);
         if(role==null){
-            // 确保role存在
             return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
         }
 
         String md5psw = DigestUtils.md5DigestAsHex((psw+user.getSalt()).getBytes());
         if(!md5psw.equals(user.getPassword())){
-            // 密码验证没有成功
             return ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
         }
 
-        System.out.println("$$$登录验证成功$$$");
-
-        // 暂时不管这个东西
         String token = JwtUtils.createToken(user.getUid());//创建一个token
         //将token插入redis,1天后过期
         redisCache.setCacheObject("TOKEN_"+token, JSON.toJSONString(user),1, TimeUnit.DAYS);
 
-        System.out.println("$$$登录验证成功并且返回$$$");
         return ResponseResult.okResult(new LoginUserResponseDto(token,role));
     }
 
@@ -185,12 +174,9 @@ public class UserServiceImpl implements UserService {
 
     public String checkRole(User user){
         QueryWrapper<User_role> wrapper = new QueryWrapper<>();
-        // 通过eq方法设置查询条件，查询uid字段等于user.getUid()的记录
         wrapper.eq("uid",user.getUid());
-        // 从ur库中验证是否存在对应的值
         User_role l = roleMapper.selectOne(wrapper);
         if(l!=null){
-            // 成功就返回这个用户的role
             return user.getRole();
         }else {
             return null;

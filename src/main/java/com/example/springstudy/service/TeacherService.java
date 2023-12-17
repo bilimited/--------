@@ -1,10 +1,8 @@
 package com.example.springstudy.service;
 
-import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.entity.Course;
 import com.example.springstudy.entity.Teacher;
 import com.example.springstudy.entity.User;
-import com.example.springstudy.entity.dto.OpenCouDto;
 import com.example.springstudy.entity.dto.OpenCourseDto;
 import com.example.springstudy.entity.dto.SetCourseProgressDto;
 
@@ -27,10 +25,10 @@ public interface TeacherService {
 
     /**
      * 开课
-     * @param openCouDto
+     * @param openCourseDto
      * @return
      */
-    public ResponseResult OpenCourse(OpenCouDto openCouDto);
+    public int OpenCourse(OpenCourseDto openCourseDto);
 
     /**
      * 设置课程进度
