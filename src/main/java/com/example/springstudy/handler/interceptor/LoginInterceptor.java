@@ -46,6 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(user==null){
             throw new Exception(String.valueOf(AppHttpCodeEnum.NEED_LOGIN));
         }
+        // 将user对象放入UserThreadLocal工具类中，后续该进程可以通过该工具类的get方法获得当前进程的对象
         UserThreadLocal.put(user);
 
         return true;

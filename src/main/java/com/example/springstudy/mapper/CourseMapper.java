@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @TableName("course")
 @Mapper
-public interface CourseMpper extends BaseMapper<Course> {
+public interface CourseMapper extends BaseMapper<Course> {
 }

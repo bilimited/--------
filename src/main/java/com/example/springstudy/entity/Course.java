@@ -27,4 +27,10 @@ public class Course {
     int capacity;
     int progress;
 
+    public Course(String cno, String cname, String tno) {
+        this.cno = cno;
+        this.cname = cname;
+        this.tno = tno;
+    }
+
 }

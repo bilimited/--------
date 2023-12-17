@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private UserService userService;
 
-    //AutoWired:不用手动初始化userService了。
+    // AutoWired:不用手动初始化userService了。
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -28,6 +28,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseResult login(@RequestBody LoginUserDto loginUserDto){
+
         return userService.login(loginUserDto);
     }
 

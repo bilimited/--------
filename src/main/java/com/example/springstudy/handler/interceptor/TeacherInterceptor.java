@@ -23,7 +23,10 @@ public class TeacherInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        User user = UserThreadLocal.get();
+        // 这里事先需要往UserThreadLocal这个工具类里面添加对象（put方法），
+        // 然后可以用这个工具类的get方法获得当前线程的user对象
+        // 在LoginInterceptor中已经将当前的User对象通过put方法加入了，所以这里可以直接使用get()方法获得对应的对象
+         User user = UserThreadLocal.get();
         if(userService.checkRole(user)!="teacher"){
             throw new Exception(String.valueOf(AppHttpCodeEnum.NO_OPERATOR_AUTH));
         }
