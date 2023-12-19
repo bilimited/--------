@@ -38,4 +38,11 @@ public interface TeacherService {
      * @return
      */
     public int SetCourseProgress(SetCourseProgressDto setCourseProgressDto);
+
+    /**
+     * 获得对应课程教学的学生
+     * @Param cno
+     * @return
+     */
+    public ResponseResult GetLearnStudents(String cno);
 }

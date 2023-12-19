@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// 教师开课时候所用的数据
+// 也用作学生查看课程时候所用的数据
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

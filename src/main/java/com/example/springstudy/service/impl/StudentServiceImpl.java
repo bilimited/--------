@@ -8,15 +8,26 @@ import com.example.springstudy.mapper.StudentCourseMapper;
 import com.example.springstudy.mapper.StudentMapper;
 import com.example.springstudy.mapper.UserRoleMapper;
 import com.example.springstudy.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StudentServiceImpl implements StudentService {
 
     UserRoleMapper userRoleMapper;
     StudentMapper studentMapper;
     CourseViewMapper courseViewMapper;
     StudentCourseMapper studentCourseMapper;
+
+    @Autowired
+    public StudentServiceImpl(UserRoleMapper userRoleMapper, StudentMapper studentMapper, CourseViewMapper courseViewMapper, StudentCourseMapper studentCourseMapper) {
+        this.userRoleMapper = userRoleMapper;
+        this.studentMapper = studentMapper;
+        this.courseViewMapper = courseViewMapper;
+        this.studentCourseMapper = studentCourseMapper;
+    }
 
     @Override
     public Student GetStudent(User user) {
@@ -37,6 +48,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<CourseView> GetLearningCourses(String sno) {
         return courseViewMapper.GetCoursesBySno(sno);
+    }
+
+    @Override
+    public List<CourseView> ShowCourses() {
+        return courseViewMapper.selectList(null);
     }
 
     @Override

@@ -17,5 +17,11 @@ public interface StudentService {
      */
     public Student GetStudent(User user);
     public List<CourseView> GetLearningCourses(String sno);
+
+    /**
+     * 查询所有课程
+     * @return
+     */
+    public List<CourseView> ShowCourses();
     public int SelectCourse(SelectCourseDto selectCourseDto);
 }
