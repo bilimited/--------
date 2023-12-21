@@ -20,7 +20,7 @@ public class ChangeProgressController {
     }
 
     @PostMapping("/teacher/teaching")
-    public int ChangeProgress(@RequestBody SetCourseProgressDto setCourseProgressDto){
+    public ResponseResult ChangeProgress(@RequestBody SetCourseProgressDto setCourseProgressDto){
         return teacherService.SetCourseProgress(setCourseProgressDto);
     }
 

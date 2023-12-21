@@ -8,7 +8,6 @@ import com.example.springstudy.entity.*;
 import com.example.springstudy.entity.dto.*;
 import com.example.springstudy.mapper.*;
 import com.example.springstudy.service.TeacherService;
-import com.example.springstudy.utils.UserThreadLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +54,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     // 获得教师所教学的课程
     @Override
-    public List<Course> GetTeachingCourses(String tno) {
+    public ResponseResult GetTeachingCourses(String tno) {
         QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
 //        // 获得当前进程的user对象,此处注释后期或可更改
 //        Teacher teacher = GetTeacher(UserThreadLocal.get());
@@ -63,7 +62,7 @@ public class TeacherServiceImpl implements TeacherService {
         // 构建查询条件为该tno的所有课程记录
         courseQueryWrapper.eq("tno",tno);
         // 返回根据构建的条件所查询到的所有结果
-        return courseMapper.selectList(courseQueryWrapper);
+        return ResponseResult.okResult(courseMapper.selectList(courseQueryWrapper));
     }
 
     @Override
@@ -81,13 +80,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public int SetCourseProgress(SetCourseProgressDto setCourseProgressDto) {
+    public ResponseResult SetCourseProgress(SetCourseProgressDto setCourseProgressDto) {
         // 获得当前用户对象对应的teacher对象
 //        Teacher teacher = GetTeacher(UserThreadLocal.get());
         UpdateWrapper<Course> wrapper = new UpdateWrapper<>();
         wrapper.eq("cno",setCourseProgressDto.getCno())
                 .set("progress",setCourseProgressDto.getProgress());
-        return courseMapper.update(null,wrapper);
+        return ResponseResult.okResult(courseMapper.update(null,wrapper));
     }
 
     @Override

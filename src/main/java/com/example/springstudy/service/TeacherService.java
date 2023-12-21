@@ -23,7 +23,7 @@ public interface TeacherService {
      * @param tno
      * @return
      */
-    public List<Course> GetTeachingCourses(String tno);
+    public ResponseResult GetTeachingCourses(String tno);
 
     /**
      * 开课
@@ -37,7 +37,7 @@ public interface TeacherService {
      * @param setCourseProgressDto
      * @return
      */
-    public int SetCourseProgress(SetCourseProgressDto setCourseProgressDto);
+    public ResponseResult SetCourseProgress(SetCourseProgressDto setCourseProgressDto);
 
     /**
      * 获得对应课程教学的学生

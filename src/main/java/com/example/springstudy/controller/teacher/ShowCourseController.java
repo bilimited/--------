@@ -18,7 +18,7 @@ public class ShowCourseController {
     }
 
     @GetMapping("/teacher/showcourse")
-    public List<Course> ShowCourse(String tno){
+    public ResponseResult ShowCourse(String tno){
         return teacherService.GetTeachingCourses(tno);
     }
 
