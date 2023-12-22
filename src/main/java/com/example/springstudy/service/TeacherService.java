@@ -7,6 +7,7 @@ import com.example.springstudy.entity.User;
 import com.example.springstudy.entity.dto.OpenCouDto;
 import com.example.springstudy.entity.dto.OpenCourseDto;
 import com.example.springstudy.entity.dto.SetCourseProgressDto;
+import com.example.springstudy.entity.dto.SetScoreDto;
 
 import java.util.List;
 
@@ -45,4 +46,11 @@ public interface TeacherService {
      * @return
      */
     public ResponseResult GetLearnStudents(String cno);
+
+    /**
+     * 设置课程下学生的分数
+     * @Param setScoreDto
+     * @return
+     */
+    public ResponseResult SerStudentScore(List<SetScoreDto> setScoreDto);
 }

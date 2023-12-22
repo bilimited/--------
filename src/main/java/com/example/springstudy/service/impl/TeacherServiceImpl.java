@@ -119,4 +119,17 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return ResponseResult.okResult(studentDtos);
     }
+
+    @Override
+    public ResponseResult SerStudentScore(List<SetScoreDto> setScoreDto){
+        for(SetScoreDto ss : setScoreDto){
+            // 修改Student_course表格中对应学号与课程号的成绩
+            UpdateWrapper<Student_course> wrapper = new UpdateWrapper<>();
+            wrapper.eq("sno",ss.getSno())
+                    .eq("cno",ss.getCno())
+                    .set("semester",ss.getSemester());
+            studentCourseMapper.update(null,wrapper);
+        }
+        return ResponseResult.okResult();
+    }
 }
