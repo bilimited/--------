@@ -4,6 +4,7 @@ import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 // 展示教师对应课程所教学的学生
@@ -18,6 +19,7 @@ public class GetLearnStuController {
 
     @GetMapping("/teacher/showstu")
     public ResponseResult GetLearnStu(String cno){
+        System.out.println("controller cno = " + cno);
         return teacherService.GetLearnStudents(cno);
     }
 

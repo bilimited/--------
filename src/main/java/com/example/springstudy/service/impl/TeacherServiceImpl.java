@@ -84,6 +84,7 @@ public class TeacherServiceImpl implements TeacherService {
         // 获得当前用户对象对应的teacher对象
 //        Teacher teacher = GetTeacher(UserThreadLocal.get());
         UpdateWrapper<Course> wrapper = new UpdateWrapper<>();
+        // 根据cno更改课程进度
         wrapper.eq("cno",setCourseProgressDto.getCno())
                 .set("progress",setCourseProgressDto.getProgress());
         return ResponseResult.okResult(courseMapper.update(null,wrapper));

@@ -1,6 +1,7 @@
 package com.example.springstudy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.entity.*;
 import com.example.springstudy.entity.dto.SelectCourseDto;
 import com.example.springstudy.mapper.CourseViewMapper;
@@ -8,6 +9,7 @@ import com.example.springstudy.mapper.StudentCourseMapper;
 import com.example.springstudy.mapper.StudentMapper;
 import com.example.springstudy.mapper.UserRoleMapper;
 import com.example.springstudy.service.StudentService;
+import com.example.springstudy.utils.UserThreadLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,24 +42,42 @@ public class StudentServiceImpl implements StudentService {
         if(sno==null){
             return null;
         }
-
+        // 根据sno找到对应的学生对象
         studentQueryWrapper.eq("sno",sno);
         return studentMapper.selectOne(studentQueryWrapper);
     }
 
     @Override
-    public List<CourseView> GetLearningCourses(String sno) {
-        return courseViewMapper.GetCoursesBySno(sno);
+    public ResponseResult GetLearningCourses(String uid) {
+
+        // 可尝试的优化代码
+//        Student student = GetStudent(UserThreadLocal.get());
+//        String sno = student.getSno();
+
+        // 下面三行根据uid获得学生的学号
+        QueryWrapper<User_role> user_roleQueryWrapper = new QueryWrapper<>();
+        System.out.println("uid = " + uid);
+        user_roleQueryWrapper.eq("uid",uid);
+        String sno = userRoleMapper.selectOne(user_roleQueryWrapper).getSno();
+
+        return ResponseResult.okResult(courseViewMapper.GetCoursesBySno(sno));
     }
 
     @Override
-    public List<CourseView> ShowCourses() {
-        return courseViewMapper.selectList(null);
+    public ResponseResult ShowCourses() {
+
+        return ResponseResult.okResult(courseViewMapper.selectList(null));
     }
 
     @Override
-    public int SelectCourse(SelectCourseDto selectCourseDto) {
-        //TODO : 懒得写了
-        return 0;
+    public ResponseResult SelectCourse(SelectCourseDto selectCourseDto) {
+        // 下面三行根据uid获得学生的学号
+        QueryWrapper<User_role> user_roleQueryWrapper = new QueryWrapper<>();
+        user_roleQueryWrapper.eq("uid",selectCourseDto.getUid());
+        String sno = userRoleMapper.selectOne(user_roleQueryWrapper).getSno();
+
+        // 将这条选课记录插入到student_course表格中去
+        int ret = studentCourseMapper.insert(new Student_course(sno,selectCourseDto.getCno(),0));
+        return ResponseResult.okResult(ret);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.springstudy.service;
 
+import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.entity.Course;
 import com.example.springstudy.entity.CourseView;
 import com.example.springstudy.entity.Student;
@@ -16,12 +17,12 @@ public interface StudentService {
      * @return
      */
     public Student GetStudent(User user);
-    public List<CourseView> GetLearningCourses(String sno);
+    public ResponseResult GetLearningCourses(String sno);
 
     /**
      * 查询所有课程
      * @return
      */
-    public List<CourseView> ShowCourses();
-    public int SelectCourse(SelectCourseDto selectCourseDto);
+    public ResponseResult ShowCourses();
+    public ResponseResult SelectCourse(SelectCourseDto selectCourseDto);
 }
