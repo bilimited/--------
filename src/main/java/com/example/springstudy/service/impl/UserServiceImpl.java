@@ -82,33 +82,50 @@ public class UserServiceImpl implements UserService {
         System.out.println("$$$开始加入数据$$$");
         //角色验证部分 根据填写的role的不同对用户做出区分
         if(user.getRole().equals("student")){
-            // 学生部分
-            if(isStudentRegistered(registryUserDto.getNo())){
-                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
-            }
-            if(isStudentExist(registryUserDto.getNo())){
-                userMapper.insert(user);
-                studentMapper.insert(new Student(registryUserDto.getNo()));
-                roleMapper.insert(new User_role(user.getUid(),registryUserDto.getNo(),null));
-            }else {
-                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
-            }
+//            // 学生部分
+//            if(isStudentRegistered(registryUserDto.getNo())){
+//                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
+//            }
+//            if(isStudentExist(registryUserDto.getNo())){
+//                userMapper.insert(user);
+//                Student student = new Student();
+//                studentMapper.insert(student);
+//                Long tea = null;
+//                roleMapper.insert(new User_role(user.getUid(),student.getSno(),tea));
+//            }else {
+//                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
+//            }
+
+            userMapper.insert(user);
+            Student student = new Student();
+            studentMapper.insert(student);
+            Long tea = null;
+            roleMapper.insert(new User_role(user.getUid(),student.getSno(),tea));
         }
         else if(user.getRole().equals("teacher")){
-            // 老师部分
-            if(isTeacherRegistered(registryUserDto.getNo())){
-                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
-            }
-//            System.out.println("$$$判断没有注册成功$$$");
-            // 开始往数据库里面添加数据
-            if(isTeacherExist(registryUserDto.getNo())){
-//                System.out.println("加入的老师为:" + user.getUsername());
-                userMapper.insert(user);
-                teacherMapper.insert(new Teacher(registryUserDto.getNo()));
-                roleMapper.insert(new User_role(user.getUid(),null, registryUserDto.getNo()));
-            }else {
-                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
-            }
+            // 去user_role里面查老师是不是已经存在
+//            if(isTeacherRegistered(registryUserDto.getNo())){
+//                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_REGISTERED);
+//            }
+////            System.out.println("$$$判断没有注册成功$$$");
+//            // 开始往数据库里面添加数据
+//            if(isTeacherExist(registryUserDto.getNo())){
+////                System.out.println("加入的老师为:" + user.getUsername());
+//                userMapper.insert(user);
+//                Teacher teacher = new Teacher();
+//                teacherMapper.insert(teacher);
+//                roleMapper.insert(new User_role(user.getUid(),0, teacher.getTno()));
+//            }else {
+//                return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
+//            }
+
+            userMapper.insert(user);
+            Teacher teacher = new Teacher();
+            teacherMapper.insert(teacher);
+            System.out.println("tno = " + teacher.getTno());
+            // 需要将sno设置为null，因此设置类型为Long而不是long
+            Long stu = null;
+            roleMapper.insert(new User_role(user.getUid(),stu, teacher.getTno()));
         }
         else{
             return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
@@ -180,7 +197,8 @@ public class UserServiceImpl implements UserService {
      * @Param uid
      * @return
      */
-    public ResponseResult ShowUserInfo(String uid){
+    @Override
+    public ResponseResult ShowUserInfo(long uid){
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("uid",uid);
         User user = userMapper.selectOne(wrapper);

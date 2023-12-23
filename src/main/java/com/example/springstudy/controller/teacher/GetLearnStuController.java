@@ -1,6 +1,7 @@
 package com.example.springstudy.controller.teacher;
 
 import com.example.springstudy.domain.ResponseResult;
+import com.example.springstudy.entity.dto.TempCnoDto;
 import com.example.springstudy.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,9 @@ public class GetLearnStuController {
     }
 
     @GetMapping("/teacher/showstu")
-    public ResponseResult GetLearnStu(String cno){
-        System.out.println("controller cno = " + cno);
-        return teacherService.GetLearnStudents(cno);
+    public ResponseResult GetLearnStu(@RequestBody TempCnoDto t){
+        System.out.println("controller cno = " + t.getCno());
+        return teacherService.GetLearnStudents(t.getCno());
     }
 
 }

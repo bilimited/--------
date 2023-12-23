@@ -13,8 +13,8 @@ import lombok.experimental.Accessors;
 @TableName("student_course")
 public class Student_course {
 
-    String sno;
-    String cno;
+    long sno;
+    long cno;
     int semester;
 
 }

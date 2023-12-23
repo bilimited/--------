@@ -24,7 +24,7 @@ public interface TeacherService {
      * @param tno
      * @return
      */
-    public ResponseResult GetTeachingCourses(String tno);
+    public ResponseResult GetTeachingCourses(long tno);
 
     /**
      * 开课
@@ -45,7 +45,7 @@ public interface TeacherService {
      * @Param cno
      * @return
      */
-    public ResponseResult GetLearnStudents(String cno);
+    public ResponseResult GetLearnStudents(long cno);
 
     /**
      * 设置课程下学生的分数

@@ -1,5 +1,6 @@
 package com.example.springstudy.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -13,8 +14,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)    //允许链式调用。User.setId().setUserName()......
 @TableName("teacher")
 public class Teacher {
-    @TableId
-    private String tno;
+    @TableId(type = IdType.AUTO)
+    private long tno;
 
 
 }

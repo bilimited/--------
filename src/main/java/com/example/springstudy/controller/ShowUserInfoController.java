@@ -1,6 +1,7 @@
 package com.example.springstudy.controller;
 
 import com.example.springstudy.domain.ResponseResult;
+import com.example.springstudy.entity.dto.TempUidDto;
 import com.example.springstudy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,8 @@ public class ShowUserInfoController {
     }
 
     @GetMapping("/user/show")
-    public ResponseResult ShowUserInfo(String uid){
-        return userService.ShowUserInfo(uid);
+    public ResponseResult ShowUserInfo(@RequestBody TempUidDto t){
+
+        return userService.ShowUserInfo(t.getUid());
     }
 }

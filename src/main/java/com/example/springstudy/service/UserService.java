@@ -50,6 +50,6 @@ public interface UserService {
      * @Param uid
      * @return
      */
-    ResponseResult ShowUserInfo(String uid);
+    ResponseResult ShowUserInfo(long uid);
 
 }

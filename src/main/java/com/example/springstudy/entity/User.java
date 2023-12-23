@@ -59,21 +59,4 @@ public class User {
     private Timestamp create_time;
     private Timestamp update_time;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                ", phone='" + phone + '\'' +
-                ", realname='" + realname + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age=" + age +
-                ", portraitid='" + portraitid + '\'' +
-                ", role='" + role + '\'' +
-                ", create_time=" + create_time +
-                ", update_time=" + update_time +
-                '}';
-    }
 }

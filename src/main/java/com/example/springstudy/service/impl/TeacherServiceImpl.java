@@ -44,8 +44,8 @@ public class TeacherServiceImpl implements TeacherService {
         // 根据uid从user_role表中查询数据,此时仅仅构建了查询条件，还没有查询
         userRoleQueryWrapper.eq("uid",user.getUid());
         // 以userRoleQueryWrapper作为条件找到对应的tno并且返回第一条数据
-        String tno = userRoleMapper.selectOne(userRoleQueryWrapper).getSno();
-        if(tno==null){
+        long tno = userRoleMapper.selectOne(userRoleQueryWrapper).getSno();
+        if(tno==0){
             return null;
         }
         teacherQueryWrapper.eq("tno",tno);
@@ -54,7 +54,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     // 获得教师所教学的课程
     @Override
-    public ResponseResult GetTeachingCourses(String tno) {
+    public ResponseResult GetTeachingCourses(long tno) {
         QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
 //        // 获得当前进程的user对象,此处注释后期或可更改
 //        Teacher teacher = GetTeacher(UserThreadLocal.get());
@@ -69,7 +69,6 @@ public class TeacherServiceImpl implements TeacherService {
     public ResponseResult OpenCourse(OpenCouDto openCouDto) {
         // 将课程添加到数据库中
         Course course = new Course(
-                openCouDto.getCno(),
                 openCouDto.getCname(),
                 openCouDto.getTno()
         );
@@ -91,7 +90,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseResult GetLearnStudents(String cno) {
+    public ResponseResult GetLearnStudents(long cno) {
         QueryWrapper<Student_course> wrapper = new QueryWrapper<>();
         wrapper.eq("cno",cno);
         // 根据课程号找到课程下所属的学生，应该返回一个列表,列表中存储的是所有选择这个课程的学生的学号、课程号与成绩
@@ -103,7 +102,7 @@ public class TeacherServiceImpl implements TeacherService {
 
             for(Student_course sc : studentCourse){
                 // 根据课程编号找到学生编号
-                String sno = sc.getSno();
+                long sno = sc.getSno();
                 // 构建查询条件
                 QueryWrapper<User_role> wrapper1 = new QueryWrapper<>();
                 wrapper1.eq("sno",sno);

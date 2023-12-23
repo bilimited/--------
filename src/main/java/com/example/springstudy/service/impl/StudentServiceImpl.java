@@ -38,8 +38,8 @@ public class StudentServiceImpl implements StudentService {
         QueryWrapper<User_role> userRoleQueryWrapper = new QueryWrapper<>();
         userRoleQueryWrapper.eq("uid",user.getUid());
 
-        String sno = userRoleMapper.selectOne(userRoleQueryWrapper).getSno();
-        if(sno==null){
+        long sno = userRoleMapper.selectOne(userRoleQueryWrapper).getSno();
+        if(sno==0){
             return null;
         }
         // 根据sno找到对应的学生对象
@@ -48,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public ResponseResult GetLearningCourses(String uid) {
+    public ResponseResult GetLearningCourses(long uid) {
 
         // 可尝试的优化代码
 //        Student student = GetStudent(UserThreadLocal.get());
@@ -58,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
         QueryWrapper<User_role> user_roleQueryWrapper = new QueryWrapper<>();
         System.out.println("uid = " + uid);
         user_roleQueryWrapper.eq("uid",uid);
-        String sno = userRoleMapper.selectOne(user_roleQueryWrapper).getSno();
+        long sno = userRoleMapper.selectOne(user_roleQueryWrapper).getSno();
 
         return ResponseResult.okResult(courseViewMapper.GetCoursesBySno(sno));
     }
@@ -74,7 +74,7 @@ public class StudentServiceImpl implements StudentService {
         // 下面三行根据uid获得学生的学号
         QueryWrapper<User_role> user_roleQueryWrapper = new QueryWrapper<>();
         user_roleQueryWrapper.eq("uid",selectCourseDto.getUid());
-        String sno = userRoleMapper.selectOne(user_roleQueryWrapper).getSno();
+        long sno = userRoleMapper.selectOne(user_roleQueryWrapper).getSno();
 
         // 将这条选课记录插入到student_course表格中去
         int ret = studentCourseMapper.insert(new Student_course(sno,selectCourseDto.getCno(),0));

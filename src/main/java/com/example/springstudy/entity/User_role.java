@@ -13,8 +13,10 @@ import lombok.experimental.Accessors;
 @TableName("user_role")
 public class User_role {
 
+    // 这里Long是因为sno与tno有的要设置为null
     private long uid;
-    private String sno;
-    private String tno;
+    private Long sno;
+    private Long tno;
+
 
 }

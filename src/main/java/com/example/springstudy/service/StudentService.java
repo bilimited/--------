@@ -17,7 +17,7 @@ public interface StudentService {
      * @return
      */
     public Student GetStudent(User user);
-    public ResponseResult GetLearningCourses(String sno);
+    public ResponseResult GetLearningCourses(long sno);
 
     /**
      * 查询所有课程

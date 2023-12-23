@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassStudentDto {
-    private String sno;
+
+    private long sno;
     private String sname;
     private int semester;
 }

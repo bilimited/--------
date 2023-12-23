@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SelectCourseDto {
-    String cno;
+    long cno;
     long uid;
 
 }

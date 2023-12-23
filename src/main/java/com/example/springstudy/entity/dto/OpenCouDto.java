@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OpenCouDto {
+    // 注意这里的cno弃置不用
     private String cno;
     private String cname;
     private String dept;
-    private String tno;
+    private long tno;
     private int day;
     private int start;
     private int end;

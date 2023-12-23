@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SetScoreDto {
-    private String sno;
+    private long sno;
     private String semester;
-    private String cno;
+    private long cno;
 }

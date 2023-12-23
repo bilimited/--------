@@ -7,11 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompleteInfoDto {
-
-    private long uid;
-    private String phone;
-    private String sex;
-    private String age;
-    private String portraitid;
+public class TempCnoDto {
+    private long cno;
 }

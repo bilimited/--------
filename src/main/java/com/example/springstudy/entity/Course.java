@@ -1,5 +1,6 @@
 package com.example.springstudy.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -14,11 +15,11 @@ import lombok.experimental.Accessors;
 @TableName("course")
 public class Course {
 
-    @TableId
-    String cno;
+    @TableId(type = IdType.AUTO)
+    long cno;
     String cname;
     String dept;
-    String tno;
+    long tno;
     int day;
     int start;
     int end;
@@ -27,8 +28,7 @@ public class Course {
     int capacity;
     int progress;
 
-    public Course(String cno, String cname, String tno) {
-        this.cno = cno;
+    public Course(String cname, long tno) {
         this.cname = cname;
         this.tno = tno;
     }

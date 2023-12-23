@@ -1,6 +1,8 @@
 package com.example.springstudy.controller.student;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.springstudy.domain.ResponseResult;
+import com.example.springstudy.entity.dto.TempUidDto;
 import com.example.springstudy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +19,11 @@ public class ShowLearningCourseController {
         this.studentService = studentService;
     }
 
+
     @GetMapping("/student/showcourse")
-    public ResponseResult ShowLearningCourse(String uid){
-        System.out.println("controller uid = " + uid);
-        return studentService.GetLearningCourses(uid);
+    public ResponseResult ShowLearningCourse(@RequestBody TempUidDto t){
+        System.out.println("controller uid = " + t.getUid());
+        return studentService.GetLearningCourses(t.getUid());
     }
 
 }

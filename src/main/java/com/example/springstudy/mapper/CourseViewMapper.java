@@ -13,7 +13,7 @@ import java.util.List;
 public interface CourseViewMapper extends BaseMapper<CourseView> {
 
     @Select("Select cv.* from course_view cv natural join student_course sc where sc.sno=#{sno}")
-    public List<CourseView> GetCoursesBySno(String sno);
+    public List<CourseView> GetCoursesBySno(long sno);
 
 
 }
