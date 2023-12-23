@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
-    private User1Mapper user1Mapper;
     private StudentMapper studentMapper;
     @Autowired
     private TeacherMapper teacherMapper;
@@ -38,9 +37,8 @@ public class UserServiceImpl implements UserService {
     private RedisCache redisCache;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, User1Mapper user1Mapper, StudentMapper studentMapper, TeacherMapper teacherMapper, UserRoleMapper roleMapper, RedisCache redisCache) {
+    public UserServiceImpl(UserMapper userMapper, StudentMapper studentMapper, TeacherMapper teacherMapper, UserRoleMapper roleMapper, RedisCache redisCache) {
         this.userMapper = userMapper;
-        this.user1Mapper = user1Mapper;
         this.studentMapper = studentMapper;
         this.teacherMapper = teacherMapper;
         this.roleMapper = roleMapper;
@@ -183,10 +181,10 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     public ResponseResult ShowUserInfo(String uid){
-        QueryWrapper<User1> wrapper = new QueryWrapper<>();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("uid",uid);
-        User1 user = user1Mapper.selectOne(wrapper);
-        System.out.println(user1Mapper.selectOne(wrapper));
+        User user = userMapper.selectOne(wrapper);
+        System.out.println(userMapper.selectOne(wrapper));
         System.out.println("user = " + user);
         return ResponseResult.okResult(
                 new ShowUserInfoDto(
@@ -196,8 +194,7 @@ public class UserServiceImpl implements UserService {
                         user.getRealname(),
                         user.getSex(),
                         user.getAge(),
-                        user.getPortraitid(),
-                        user.getCreate_time()
+                        user.getPortraitid()
                 )
         );
     }

@@ -18,5 +18,4 @@ public class ShowUserInfoDto {
     private String sex;
     private int age;
     private String portraitid;
-    private Date create_time;
 }
