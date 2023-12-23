@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
             }
             if(isStudentExist(registryUserDto.getNo())){
                 userMapper.insert(user);
-                studentMapper.insert(new Student(registryUserDto.getNo(),null));
+                studentMapper.insert(new Student(registryUserDto.getNo()));
                 roleMapper.insert(new User_role(user.getUid(),registryUserDto.getNo(),null));
             }else {
                 return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);

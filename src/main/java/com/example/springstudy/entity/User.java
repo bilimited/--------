@@ -33,6 +33,8 @@ public class User {
         update_time = new Timestamp(System.currentTimeMillis());
     }
 
+
+
     @TableId(type = IdType.AUTO)
     private long uid;
     private String username;
@@ -46,11 +48,11 @@ public class User {
     private String phone;
 
     // 用户真实姓名，暂时注释掉，
-//    private String realname;
-//    private String sex;
-//    private int age;
+    private String realname;
+    private String sex;
+    private int age;
     // 用户头像id
-//    private String portraitid;
+    private String portraitid;
 
     private String role;
     private Timestamp create_time;

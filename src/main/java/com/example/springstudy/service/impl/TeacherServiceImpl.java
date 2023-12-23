@@ -23,18 +23,18 @@ public class TeacherServiceImpl implements TeacherService {
     CourseMapper courseMapper;
     StudentCourseMapper studentCourseMapper;
     StudentMapper studentMapper;
-
+    UserMapper userMapper;
 
     @Autowired
-    public TeacherServiceImpl(UserRoleMapper userRoleMapper, TeacherMapper teacherMapper, CourseViewMapper courseViewMapper, CourseMapper courseMapper, StudentCourseMapper studentCourseMapper, StudentMapper studentMapper) {
+    public TeacherServiceImpl(UserRoleMapper userRoleMapper, TeacherMapper teacherMapper, CourseViewMapper courseViewMapper, CourseMapper courseMapper, StudentCourseMapper studentCourseMapper, StudentMapper studentMapper, UserMapper userMapper) {
         this.userRoleMapper = userRoleMapper;
         this.teacherMapper = teacherMapper;
         this.courseViewMapper = courseViewMapper;
         this.courseMapper = courseMapper;
         this.studentCourseMapper = studentCourseMapper;
         this.studentMapper = studentMapper;
+        this.userMapper = userMapper;
     }
-
 
     // 通过用户对象找到对应的teancher对象
     @Override
@@ -73,8 +73,8 @@ public class TeacherServiceImpl implements TeacherService {
                 openCouDto.getCname(),
                 openCouDto.getTno()
         );
-        System.out.println("$$$开始插入$$$");
-        System.out.println(course);
+        // System.out.println("$$$开始插入$$$");
+        // System.out.println(course);
         courseMapper.insert(course);
         return ResponseResult.okResult();
     }
@@ -105,10 +105,13 @@ public class TeacherServiceImpl implements TeacherService {
                 // 根据课程编号找到学生编号
                 String sno = sc.getSno();
                 // 构建查询条件
-                QueryWrapper<Student> wrapper1 = new QueryWrapper<>();
+                QueryWrapper<User_role> wrapper1 = new QueryWrapper<>();
                 wrapper1.eq("sno",sno);
                 // 在student表里面查询学生姓名
-                String sname = (studentMapper.selectOne(wrapper1)).getSname();
+                long uid = (userRoleMapper.selectOne(wrapper1)).getUid();
+                QueryWrapper<User> wrapper2 = new QueryWrapper<>();
+                wrapper2.eq("uid",uid);
+                String sname = (userMapper.selectOne(wrapper2)).getRealname();
                 // 将数据塞入列表中
                 studentDtos.add(new ClassStudentDto(sno,sname,sc.getSemester()));
             }
