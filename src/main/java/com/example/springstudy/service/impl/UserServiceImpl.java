@@ -4,11 +4,13 @@ import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.domain.enums.AppHttpCodeEnum;
 import com.example.springstudy.entity.Student;
 import com.example.springstudy.entity.Teacher;
 import com.example.springstudy.entity.User_role;
+import com.example.springstudy.entity.dto.CompleteInfoDto;
 import com.example.springstudy.entity.dto.LoginUserDto;
 import com.example.springstudy.entity.dto.LoginUserResponseDto;
 import com.example.springstudy.entity.dto.RegistryUserDto;
@@ -22,6 +24,7 @@ import com.example.springstudy.utils.BeanCopyUtil;
 import com.example.springstudy.utils.JwtUtils;
 import com.example.springstudy.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -72,13 +75,15 @@ public class UserServiceImpl implements UserService {
             return ResponseResult.errorResult(AppHttpCodeEnum.USERNAME_EXIST);
         }
 
+
         //根据注册信息复制出来一个新的User
         User user = new User(
                 registryUserDto.getUid(),
                 registryUserDto.getUsername(),
                 registryUserDto.getPassword(),
                 registryUserDto.getSalt(),
-                registryUserDto.getRole()
+                registryUserDto.getRole(),
+                registryUserDto.getRealname()
         );
         //User user = BeanCopyUtil.copyBean(registryUserDto,User.class);
 
@@ -158,6 +163,25 @@ public class UserServiceImpl implements UserService {
 
         System.out.println("$$$登录验证成功并且返回$$$");
         return ResponseResult.okResult(new LoginUserResponseDto(token,role));
+    }
+
+    @Override
+    public ResponseResult CompleteInfo(CompleteInfoDto completeInfoDto){
+        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+        wrapper.eq("uid",completeInfoDto.getUid())
+                .set("phone",completeInfoDto.getPhone())
+                .set("age",completeInfoDto.getAge())
+                .set("sex",completeInfoDto.getSex())
+                .set("portraitid",completeInfoDto.getPortraitid())
+                .set("update_time",new Timestamp(System.currentTimeMillis()));
+        if(userMapper.update(null,wrapper) != 0){
+            return ResponseResult.okResult();
+        }
+        else {
+            // 其实不可能出现错误，但是以防万一
+            return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR);
+        }
+
     }
 
     /**

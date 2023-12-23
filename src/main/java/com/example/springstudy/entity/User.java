@@ -23,12 +23,13 @@ import java.util.UUID;
 @TableName("user")
 public class User {
 
-    public User(long uid, String username, String password, String salt, String role) {
+    public User(long uid, String username, String password, String salt, String role,String realname) {
         this.uid = uid;
         this.username = username;
         this.password = password;
         this.salt = salt;
         this.role = role;
+        this.realname = realname;
         create_time = new Timestamp(System.currentTimeMillis());
         update_time = new Timestamp(System.currentTimeMillis());
     }

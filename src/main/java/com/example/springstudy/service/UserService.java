@@ -1,6 +1,7 @@
 package com.example.springstudy.service;
 
 import com.example.springstudy.domain.ResponseResult;
+import com.example.springstudy.entity.dto.CompleteInfoDto;
 import com.example.springstudy.entity.dto.LoginUserDto;
 import com.example.springstudy.entity.dto.LoginUserResponseDto;
 import com.example.springstudy.entity.dto.RegistryUserDto;
@@ -35,5 +36,13 @@ public interface UserService {
     User checkToken(String token);
 
     String checkRole(User user);
+
+    /**
+     * 用户完善信息
+     * @param completeInfoDto
+     * @return
+     */
+
+    ResponseResult CompleteInfo(CompleteInfoDto completeInfoDto);
 
 }

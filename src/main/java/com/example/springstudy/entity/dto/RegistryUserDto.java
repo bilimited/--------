@@ -28,6 +28,7 @@ public class RegistryUserDto {
     @JsonIgnore
     private String salt = UUID.randomUUID().toString().replaceAll("-","");
     private String phone;
+    private String realname;
     private String role;
     @JsonIgnore
     private Timestamp create_time;
