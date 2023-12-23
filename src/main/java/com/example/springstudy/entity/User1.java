@@ -9,7 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+
 import java.util.UUID;
 
 /**
@@ -21,21 +23,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Accessors(chain = true)    //允许链式调用。User.setId().setUserName()......
 @TableName("user")
-public class User {
-
-    public User(long uid, String username, String password, String salt, String role,String realname) {
-        this.uid = uid;
-        this.username = username;
-        this.password = password;
-        this.salt = salt;
-        this.role = role;
-        this.realname = realname;
-        create_time = new Timestamp(System.currentTimeMillis());
-        update_time = new Timestamp(System.currentTimeMillis());
-    }
-
-
-
+public class User1 {
     @TableId(type = IdType.AUTO)
     private long uid;
     private String username;
@@ -56,8 +44,8 @@ public class User {
     private String portraitid;
 
     private String role;
-    private Timestamp create_time;
-    private Timestamp update_time;
+    private Date create_time;
+    private Date update_time;
 
     @Override
     public String toString() {

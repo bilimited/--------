@@ -45,4 +45,11 @@ public interface UserService {
 
     ResponseResult CompleteInfo(CompleteInfoDto completeInfoDto);
 
+    /**
+     * 展示用户信息界面
+     * @Param uid
+     * @return
+     */
+    ResponseResult ShowUserInfo(String uid);
+
 }

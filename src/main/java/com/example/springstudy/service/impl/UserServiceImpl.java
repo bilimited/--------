@@ -7,18 +7,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.domain.enums.AppHttpCodeEnum;
-import com.example.springstudy.entity.Student;
-import com.example.springstudy.entity.Teacher;
-import com.example.springstudy.entity.User_role;
-import com.example.springstudy.entity.dto.CompleteInfoDto;
-import com.example.springstudy.entity.dto.LoginUserDto;
-import com.example.springstudy.entity.dto.LoginUserResponseDto;
-import com.example.springstudy.entity.dto.RegistryUserDto;
-import com.example.springstudy.entity.User;
-import com.example.springstudy.mapper.StudentMapper;
-import com.example.springstudy.mapper.TeacherMapper;
-import com.example.springstudy.mapper.UserMapper;
-import com.example.springstudy.mapper.UserRoleMapper;
+import com.example.springstudy.entity.*;
+import com.example.springstudy.entity.dto.*;
+import com.example.springstudy.mapper.*;
 import com.example.springstudy.service.UserService;
 import com.example.springstudy.utils.BeanCopyUtil;
 import com.example.springstudy.utils.JwtUtils;
@@ -38,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    private User1Mapper user1Mapper;
     private StudentMapper studentMapper;
     @Autowired
     private TeacherMapper teacherMapper;
@@ -46,8 +38,9 @@ public class UserServiceImpl implements UserService {
     private RedisCache redisCache;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, StudentMapper studentMapper, TeacherMapper teacherMapper, UserRoleMapper roleMapper, RedisCache redisCache) {
+    public UserServiceImpl(UserMapper userMapper, User1Mapper user1Mapper, StudentMapper studentMapper, TeacherMapper teacherMapper, UserRoleMapper roleMapper, RedisCache redisCache) {
         this.userMapper = userMapper;
+        this.user1Mapper = user1Mapper;
         this.studentMapper = studentMapper;
         this.teacherMapper = teacherMapper;
         this.roleMapper = roleMapper;
@@ -182,6 +175,31 @@ public class UserServiceImpl implements UserService {
             return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR);
         }
 
+    }
+
+    /**
+     * 展示用户信息界面
+     * @Param uid
+     * @return
+     */
+    public ResponseResult ShowUserInfo(String uid){
+        QueryWrapper<User1> wrapper = new QueryWrapper<>();
+        wrapper.eq("uid",uid);
+        User1 user = user1Mapper.selectOne(wrapper);
+        System.out.println(user1Mapper.selectOne(wrapper));
+        System.out.println("user = " + user);
+        return ResponseResult.okResult(
+                new ShowUserInfoDto(
+                        user.getUid(),
+                        user.getUsername(),
+                        user.getPhone(),
+                        user.getRealname(),
+                        user.getSex(),
+                        user.getAge(),
+                        user.getPortraitid(),
+                        user.getCreate_time()
+                )
+        );
     }
 
     /**
