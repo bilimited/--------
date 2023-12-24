@@ -48,8 +48,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
          */
         // 检查前端传送回来的数据是否有对应的token
         // 检查所有的接口，但是除了注册和登录接口
-//        registry.addInterceptor(loginInterceptor)
-//                .addPathPatterns("/**").excludePathPatterns("/user/registry","/user/login");//参数是需要做登录验证的接口，这里代表验证所有/开头的接口。
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**").excludePathPatterns("/user/registry","/user/login");//参数是需要做登录验证的接口，这里代表验证所有/开头的接口。
 //        registry.addInterceptor(studentInterceptor)
 //                .addPathPatterns("/student/**");
 //        registry.addInterceptor(teacherInterceptor)

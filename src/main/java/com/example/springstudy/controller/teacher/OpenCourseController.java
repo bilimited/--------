@@ -22,8 +22,9 @@ public class OpenCourseController {
         this.teacherService = teacherService;
     }
     @PostMapping("/teacher/opencourse")
-    public ResponseResult OpenCourse(@RequestBody OpenCouDto openCouDto){
+    public ResponseResult OpenCourse(@RequestBody Course openCouDto){
         // 调用teacher中的开课service方法
+        openCouDto.setTno(teacherService.GetTeacher().getTno());
         System.out.println(openCouDto);
         return teacherService.OpenCourse(openCouDto);
     }

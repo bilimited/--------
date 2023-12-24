@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.entity.dto.TempUidDto;
 import com.example.springstudy.service.StudentService;
+import com.example.springstudy.utils.UserThreadLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +22,8 @@ public class ShowLearningCourseController {
 
 
     @GetMapping("/student/showcourse")
-    public ResponseResult ShowLearningCourse(@RequestBody TempUidDto t){
-        System.out.println("controller uid = " + t.getUid());
-        return studentService.GetLearningCourses(t.getUid());
+    public ResponseResult ShowLearningCourse(){
+        return studentService.GetLearningCourses(UserThreadLocal.get().getUid());
     }
 
 }

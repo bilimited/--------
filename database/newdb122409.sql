@@ -17,7 +17,7 @@
 
 -- 导出 ts1 的数据库结构
 CREATE DATABASE IF NOT EXISTS `ts1` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `ts1`;
+USE `ts1`;user
 
 -- 导出  表 ts1.course 结构
 CREATE TABLE IF NOT EXISTS `course` (

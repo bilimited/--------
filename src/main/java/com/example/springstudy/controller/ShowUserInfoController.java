@@ -3,6 +3,7 @@ package com.example.springstudy.controller;
 import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.entity.dto.TempUidDto;
 import com.example.springstudy.service.UserService;
+import com.example.springstudy.utils.UserThreadLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +20,8 @@ public class ShowUserInfoController {
     }
 
     @GetMapping("/user/show")
-    public ResponseResult ShowUserInfo(@RequestBody TempUidDto t){
+    public ResponseResult ShowUserInfo(){
 
-        return userService.ShowUserInfo(t.getUid());
+        return userService.ShowUserInfo(UserThreadLocal.get().getUid());
     }
 }

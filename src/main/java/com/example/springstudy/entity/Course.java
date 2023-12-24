@@ -28,9 +28,5 @@ public class Course {
     int capacity;
     int progress;
 
-    public Course(String cname, long tno) {
-        this.cname = cname;
-        this.tno = tno;
-    }
 
 }

@@ -8,6 +8,7 @@ import com.example.springstudy.entity.*;
 import com.example.springstudy.entity.dto.*;
 import com.example.springstudy.mapper.*;
 import com.example.springstudy.service.TeacherService;
+import com.example.springstudy.utils.UserThreadLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,12 +45,17 @@ public class TeacherServiceImpl implements TeacherService {
         // 根据uid从user_role表中查询数据,此时仅仅构建了查询条件，还没有查询
         userRoleQueryWrapper.eq("uid",user.getUid());
         // 以userRoleQueryWrapper作为条件找到对应的tno并且返回第一条数据
-        long tno = userRoleMapper.selectOne(userRoleQueryWrapper).getSno();
+        long tno = userRoleMapper.selectOne(userRoleQueryWrapper).getTno();
         if(tno==0){
             return null;
         }
         teacherQueryWrapper.eq("tno",tno);
         return teacherMapper.selectOne(teacherQueryWrapper);
+    }
+
+    @Override
+    public Teacher GetTeacher() {
+        return GetTeacher(UserThreadLocal.get());
     }
 
     // 获得教师所教学的课程
@@ -65,15 +71,21 @@ public class TeacherServiceImpl implements TeacherService {
         return ResponseResult.okResult(courseMapper.selectList(courseQueryWrapper));
     }
 
+    @Deprecated
     @Override
     public ResponseResult OpenCourse(OpenCouDto openCouDto) {
         // 将课程添加到数据库中
         Course course = new Course(
-                openCouDto.getCname(),
-                openCouDto.getTno()
         );
         // System.out.println("$$$开始插入$$$");
         // System.out.println(course);
+        courseMapper.insert(course);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult OpenCourse(Course course) {
+
         courseMapper.insert(course);
         return ResponseResult.okResult();
     }
