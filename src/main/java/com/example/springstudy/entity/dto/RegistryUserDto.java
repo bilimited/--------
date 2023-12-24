@@ -20,7 +20,6 @@ public class RegistryUserDto {
     private String username;
     private String password;
 
-    private String no;
 
     /**
      * 盐值：一个随机的字符串，用于登录验证
