@@ -61,16 +61,21 @@ public class TeacherServiceImpl implements TeacherService {
     // 获得教师所教学的课程
     @Override
     public ResponseResult GetTeachingCourses(long tno) {
-        QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<CourseView> courseQueryWrapper = new QueryWrapper<>();
 //        // 获得当前进程的user对象,此处注释后期或可更改
 //        Teacher teacher = GetTeacher(UserThreadLocal.get());
 //        String tno = teacher.getTno();
         // 构建查询条件为该tno的所有课程记录
         courseQueryWrapper.eq("tno",tno);
         // 返回根据构建的条件所查询到的所有结果
-        return ResponseResult.okResult(courseMapper.selectList(courseQueryWrapper));
+        return ResponseResult.okResult(courseViewMapper.selectList(courseQueryWrapper));
     }
 
+    /**
+     * 该方法已废弃，不要调用这个方法
+     * @param openCouDto
+     * @return
+     */
     @Deprecated
     @Override
     public ResponseResult OpenCourse(OpenCouDto openCouDto) {
@@ -144,6 +149,12 @@ public class TeacherServiceImpl implements TeacherService {
                     .set("semester",ss.getSemester());
             studentCourseMapper.update(null,wrapper);
         }
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult UpdateCourse(Course newcourse) {
+        courseMapper.update(newcourse,new QueryWrapper<Course>().eq("cno",newcourse.getCno()));
         return ResponseResult.okResult();
     }
 }

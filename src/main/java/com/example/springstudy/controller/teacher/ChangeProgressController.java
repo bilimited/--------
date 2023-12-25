@@ -23,5 +23,4 @@ public class ChangeProgressController {
     public ResponseResult ChangeProgress(@RequestBody SetCourseProgressDto setCourseProgressDto){
         return teacherService.SetCourseProgress(setCourseProgressDto);
     }
-
 }

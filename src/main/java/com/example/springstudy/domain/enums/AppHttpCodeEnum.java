@@ -23,7 +23,8 @@ public enum AppHttpCodeEnum {
     NICKNAME_EXIST(512, "昵称已存在"),
     LOGIN_ERROR(505, "用户名或密码错误"),
     ROLE_NOT_EXIST(520,"教师或学生档案不存在"),
-    ROLE_REGISTERED(521,"档案已被注册"),;
+    ROLE_REGISTERED(521,"档案已被注册"),
+    COURSE_NOT_EXIST(522,"课程不存在");
 
 
     int code;
