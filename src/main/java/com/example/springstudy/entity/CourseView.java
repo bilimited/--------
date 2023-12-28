@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @TableName("course_view")
 public class CourseView {
 
-    private String cno;
+    private long cno;
     private String cname;
     private String dept;
     private String tname;

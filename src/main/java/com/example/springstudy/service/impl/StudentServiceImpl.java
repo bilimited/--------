@@ -49,6 +49,10 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.selectOne(studentQueryWrapper);
     }
 
+    public Student GetStudent(){
+        return GetStudent(UserThreadLocal.get());
+    }
+
     @Override
     public ResponseResult GetLearningCourses(long uid) {
 
@@ -73,13 +77,23 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public ResponseResult SelectCourse(SelectCourseDto selectCourseDto) {
-        // 下面三行根据uid获得学生的学号
-        QueryWrapper<User_role> user_roleQueryWrapper = new QueryWrapper<>();
-        user_roleQueryWrapper.eq("uid",selectCourseDto.getUid());
-        long sno = userRoleMapper.selectOne(user_roleQueryWrapper).getSno();
+        long sno = GetStudent().getSno();
+        long cno = selectCourseDto.getCno();
+        CourseView course = courseViewMapper.selectOne(new QueryWrapper<CourseView>().eq("cno",cno));
+        if(course==null){
+            return ResponseResult.errorResult(AppHttpCodeEnum.COURSE_NOT_EXIST);
+        }
 
+        //如果课程人数已满则选课失败
+        if(course.getStunumber() >= course.getCapacity()){
+            return  ResponseResult.errorResult(AppHttpCodeEnum.COURSE_FULL);
+        }
+
+        if(studentCourseMapper.selectOne(new QueryWrapper<Student_course>().eq("sno",sno).eq("cno",cno))!=null){
+            return  ResponseResult.errorResult(AppHttpCodeEnum.COURSE_SELECTED);
+        }
         // 将这条选课记录插入到student_course表格中去
-        int ret = studentCourseMapper.insert(new Student_course(sno,selectCourseDto.getCno(),0));
+        int ret = studentCourseMapper.insert(new Student_course(sno,cno,0));
         return ResponseResult.okResult(ret);
     }
 

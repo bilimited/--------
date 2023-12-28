@@ -19,6 +19,8 @@ public interface TeacherService {
      */
     public Teacher GetTeacher(User user);
 
+    public Teacher GetTeacher();
+
     /**
      * 获取该教师正在教授的课程。
      * @param tno
@@ -31,8 +33,9 @@ public interface TeacherService {
      * @param openCouDto
      * @return
      */
+    @Deprecated
     public ResponseResult OpenCourse(OpenCouDto openCouDto);
-
+    public ResponseResult OpenCourse(Course course);
     /**
      * 设置课程进度
      * @param setCourseProgressDto
@@ -53,4 +56,11 @@ public interface TeacherService {
      * @return
      */
     public ResponseResult SerStudentScore(List<SetScoreDto> setScoreDto);
+
+    /**
+     * 更新课程
+     * @param newcourse
+     * @return
+     */
+    public ResponseResult UpdateCourse(Course newcourse);
 }

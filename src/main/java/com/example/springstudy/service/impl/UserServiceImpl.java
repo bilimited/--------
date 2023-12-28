@@ -212,6 +212,7 @@ public class UserServiceImpl implements UserService {
                         user.getRealname(),
                         user.getSex(),
                         user.getAge(),
+                        user.getRole(),
                         user.getPortraitid()
                 )
         );

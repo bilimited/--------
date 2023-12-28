@@ -9,6 +9,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SelectCourseDto {
     long cno;
-    long uid;
-
 }

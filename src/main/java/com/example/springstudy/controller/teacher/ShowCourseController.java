@@ -4,6 +4,7 @@ import com.example.springstudy.domain.ResponseResult;
 import com.example.springstudy.entity.Course;
 import com.example.springstudy.entity.dto.TempTnoDto;
 import com.example.springstudy.service.TeacherService;
+import com.example.springstudy.utils.UserThreadLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +21,8 @@ public class ShowCourseController {
     }
 
     @GetMapping("/teacher/showcourse")
-    public ResponseResult ShowCourse(@RequestBody TempTnoDto t){
-
-        return teacherService.GetTeachingCourses(t.getTno());
+    public ResponseResult ShowCourse(){
+        return teacherService.GetTeachingCourses(teacherService.GetTeacher().getTno());
     }
 
 }

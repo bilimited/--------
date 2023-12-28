@@ -17,5 +17,6 @@ public class ShowUserInfoDto {
     private String realname;
     private String sex;
     private int age;
+    private String role;
     private String portraitid;
 }
