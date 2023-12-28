@@ -2,8 +2,10 @@ package com.example.springstudy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.springstudy.domain.ResponseResult;
+import com.example.springstudy.domain.enums.AppHttpCodeEnum;
 import com.example.springstudy.entity.*;
 import com.example.springstudy.entity.dto.SelectCourseDto;
+import com.example.springstudy.entity.dto.SetScoreDto;
 import com.example.springstudy.mapper.CourseViewMapper;
 import com.example.springstudy.mapper.StudentCourseMapper;
 import com.example.springstudy.mapper.StudentMapper;
@@ -79,5 +81,17 @@ public class StudentServiceImpl implements StudentService {
         // 将这条选课记录插入到student_course表格中去
         int ret = studentCourseMapper.insert(new Student_course(sno,selectCourseDto.getCno(),0));
         return ResponseResult.okResult(ret);
+    }
+
+    @Override
+    public ResponseResult GetScore(SetScoreDto setScoreDto) {
+        QueryWrapper<Student_course> wrapper = new QueryWrapper<>();
+        wrapper.eq("sno",setScoreDto.getSno())
+                .eq("cno",setScoreDto.getCno());
+        Student_course studentCourse = studentCourseMapper.selectOne(wrapper);
+        if(studentCourse == null){
+            return ResponseResult.errorResult(AppHttpCodeEnum.ROLE_NOT_EXIST);
+        }
+        return ResponseResult.okResult(studentCourse.getSemester());
     }
 }

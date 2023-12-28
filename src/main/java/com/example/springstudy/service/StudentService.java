@@ -7,6 +7,7 @@ import com.example.springstudy.entity.Student;
 import com.example.springstudy.entity.User;
 import com.example.springstudy.entity.dto.OpenCourseDto;
 import com.example.springstudy.entity.dto.SelectCourseDto;
+import com.example.springstudy.entity.dto.SetScoreDto;
 
 import java.util.List;
 
@@ -25,4 +26,10 @@ public interface StudentService {
      */
     public ResponseResult ShowCourses();
     public ResponseResult SelectCourse(SelectCourseDto selectCourseDto);
+    /**
+     * 查询对应科目分数
+     * @Param setScoreDto
+     * @return
+     */
+    public ResponseResult GetScore(SetScoreDto setScoreDto);
 }
