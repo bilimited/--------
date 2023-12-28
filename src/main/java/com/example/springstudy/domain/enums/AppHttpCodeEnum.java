@@ -24,7 +24,10 @@ public enum AppHttpCodeEnum {
     LOGIN_ERROR(505, "用户名或密码错误"),
     ROLE_NOT_EXIST(520,"教师或学生档案不存在"),
     ROLE_REGISTERED(521,"档案已被注册"),
-    COURSE_NOT_EXIST(522,"课程不存在");
+    COURSE_NOT_EXIST(522,"课程不存在"),
+    COURSE_FULL(522,"课程人数已达上限！"),
+    COURSE_SELECTED(523,"你已经选择了此课程！"),
+    COURSE_REPETION(524,"课程名称重复！");
 
 
     int code;
