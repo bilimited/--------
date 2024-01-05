@@ -5,6 +5,7 @@ import com.example.springstudy.entity.dto.SetScoreDto;
 import com.example.springstudy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class GetScoreController {
     }
 
     // 此处复用了教师设置成绩所输入的Dto
-    @GetMapping("/student/getScore")
+    @PostMapping("/student/getScore")
     public ResponseResult GetScore(@RequestBody SetScoreDto setScoreDto){
         System.out.println(setScoreDto);
         return studentService.GetScore(setScoreDto);

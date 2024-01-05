@@ -55,7 +55,7 @@ public interface TeacherService {
      * @Param setScoreDto
      * @return
      */
-    public ResponseResult SerStudentScore(List<SetScoreDto> setScoreDto);
+    public ResponseResult SerStudentScore(SetScoreDto setScoreDto);
 
     /**
      * 更新课程

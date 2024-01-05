@@ -27,7 +27,8 @@ public enum AppHttpCodeEnum {
     COURSE_NOT_EXIST(522,"课程不存在"),
     COURSE_FULL(522,"课程人数已达上限！"),
     COURSE_SELECTED(523,"你已经选择了此课程！"),
-    COURSE_REPETION(524,"课程名称重复！");
+    COURSE_REPETION(524,"课程名称重复！"),
+    TIME_CONFLIECT(525," 课程时间冲突");
 
 
     int code;

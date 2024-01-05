@@ -90,6 +90,31 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public ResponseResult OpenCourse(Course course) {
+        // 在这个地方对课程进行判断是否选择的时段非法
+        QueryWrapper<Course> wrapper = new QueryWrapper<>();
+        wrapper.eq("day",course.getDay());
+        List<Course> courses = courseMapper.selectList(wrapper);
+        if(courses != null){
+            // 如果该教师在同一天里面有课程
+            int start = course.getStart();
+            int end = course.getEnd();
+            for(Course cou : courses){
+                // 遍历列表里面的课程
+                int started = cou.getStart();
+                int ended = cou.getEnd();
+                if(start>=started && start<ended){
+                    System.out.println("--------------jdde");
+                    // 如果开课时间在已存在的课程时间内
+                    return ResponseResult.errorResult(AppHttpCodeEnum.TIME_CONFLIECT);
+                }
+                if(start<started && end>started){
+                    System.out.println("%%%%%%%%%%%%%%%%%%%");
+                    // 如果课程结束时间晚于下一节课
+                    return ResponseResult.errorResult(AppHttpCodeEnum.TIME_CONFLIECT);
+                }
+            }
+
+        }
 
         courseMapper.insert(course);
         return ResponseResult.okResult();
@@ -140,15 +165,15 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseResult SerStudentScore(List<SetScoreDto> setScoreDto){
-        for(SetScoreDto ss : setScoreDto){
+    public ResponseResult SerStudentScore(SetScoreDto ss){
+        //for(SetScoreDto ss : setScoreDto){
             // 修改Student_course表格中对应学号与课程号的成绩
             UpdateWrapper<Student_course> wrapper = new UpdateWrapper<>();
             wrapper.eq("sno",ss.getSno())
                     .eq("cno",ss.getCno())
                     .set("semester",ss.getSemester());
             studentCourseMapper.update(null,wrapper);
-        }
+        //}
         return ResponseResult.okResult();
     }
 

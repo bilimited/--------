@@ -21,7 +21,7 @@ public class SetScoreController {
     }
 
     @PostMapping("/teacher/wgrade")
-    public ResponseResult SetScore(@RequestBody List<SetScoreDto> setScoreDto){
+    public ResponseResult SetScore(@RequestBody SetScoreDto setScoreDto){
         return teacherService.SerStudentScore(setScoreDto);
     }
 }
